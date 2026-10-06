@@ -1,0 +1,14 @@
+services:
+  api:
+    image: node:22.11-alpine
+    working_dir: /app
+    command: ["node", "server.js"]
+    volumes:
+      - ./server.js:/app/server.js:ro
+    ports:
+      - "127.0.0.1:3000:3000"
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://127.0.0.1:3000/health"]
+      interval: 2s
+      timeout: 2s
+      retries: 15
